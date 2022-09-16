@@ -1,0 +1,22 @@
+[hosts]
+# Automatically sets hosts file entries.
+# NOTE: Admin privileges are required to set hosts automatically.
+#
+# default: true
+auto_set_hosts = true
+
+# Get your local IP address automatically. (EXPERIMENTAL)
+#
+# default: true
+auto_get_ip = true
+
+# If auto_get_ip is false, use this IP address as the host.
+# Ex. "192.168.1.1"
+#
+# default: ""
+local_ip = ""
+
+# Removes the host entries if true. Make sure to disable auto_set_hosts if you want to use this, or it will add the hosts again.
+#
+# default: false
+remove_hosts = false
