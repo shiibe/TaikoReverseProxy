@@ -21,6 +21,7 @@ const initServer = () => {
     const naominet = httpProxy
         .createProxyServer({
             target: serverTarget,
+            selfHandleResponse: true,
         })
         .listen(PORT_NAOMINET, () => {
             console.log(
@@ -37,6 +38,7 @@ const initServer = () => {
                 key: fs.readFileSync(MUCHA_KEY),
                 cert: fs.readFileSync(MUCHA_CERT),
             },
+            selfHandleResponse: true,
         })
         .listen(PORT_MUCHA, () => {
             console.log(
@@ -53,6 +55,7 @@ const initServer = () => {
                 key: fs.readFileSync(VSAPI_KEY),
                 cert: fs.readFileSync(VSAPI_CERT),
             },
+            selfHandleResponse: true,
         })
         .listen(PORT_STARTUP, () => {
             console.log(
@@ -69,6 +72,7 @@ const initServer = () => {
                 key: fs.readFileSync(VSAPI_KEY),
                 cert: fs.readFileSync(VSAPI_CERT),
             },
+            selfHandleResponse: true,
         })
         .listen(PORT_HB, () => {
             console.log(chalk.green("[TAIKO]"), `listening on port ${PORT_HB}`);
@@ -76,18 +80,55 @@ const initServer = () => {
 
     naominet.on("proxyRes", function (proxyRes, req, res) {
         console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+
+        let body = [];
+        proxyRes.on("data", (chunk) => {
+            body.push(chunk);
+        });
+
+        proxyRes.on("end", () => {
+            res.end(Buffer.concat(body));
+        });
     });
 
     mucha.on("proxyRes", function (proxyRes, req, res) {
         console.log(chalk.grey(`[MUCHA] ${req.method} ${req.url}`));
+
+        let body = [];
+        proxyRes.on("data", (chunk) => {
+            body.push(chunk);
+        });
+
+        proxyRes.on("end", () => {
+            res.end(Buffer.concat(body));
+        });
     });
 
     vsi.on("proxyRes", function (proxyRes, req, res) {
         console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+
+        let body = [];
+        proxyRes.on("data", (chunk) => {
+            body.push(chunk);
+        });
+
+        proxyRes.on("end", () => {
+            res.end(Buffer.concat(body));
+        });
     });
 
     taiko.on("proxyRes", function (proxyRes, req, res) {
         console.log(chalk.grey(`[TAIKO] ${req.method} ${req.url}`));
+
+        // wait for full response and then send it to the client
+        let body = [];
+        proxyRes.on("data", (chunk) => {
+            body.push(chunk);
+        });
+
+        proxyRes.on("end", () => {
+            res.end(Buffer.concat(body));
+        });
     });
 };
 
