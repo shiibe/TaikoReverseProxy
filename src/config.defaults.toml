@@ -2,13 +2,13 @@
 # Automatically sets hosts file entries.
 # NOTE: Admin privileges are required to set hosts automatically.
 #
-# default: true
-auto_set_hosts = true
+# default: false
+auto_set_hosts = false
 
 # Get your local IP address automatically. (EXPERIMENTAL)
 #
-# default: true
-auto_get_ip = true
+# default: false
+auto_get_ip = false
 
 # If auto_get_ip is false, use this IP address as the host.
 # Ex. "192.168.1.1"

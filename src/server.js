@@ -1,20 +1,17 @@
-import { createRequire } from "module";
-import fs from "fs";
-import path from "path";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import chalk from "chalk";
-import setHosts from "./controllers/set_hosts.js";
+const fs = require("fs");
+const path = require("path");
+const chalk = require("chalk");
 
-const packageJson = createRequire(import.meta.url)("../package.json");
+const setHosts = require("./controllers/set_hosts.js");
+const initServer = require("./controllers/init_server.js");
+
+// get version from package.json
+const packageJson = require("../package.json");
 const version = packageJson.version;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 console.log(
     chalk.grey("----------------------------------------------------\n"),
-    chalk.white(`TaikoProxyServer v${version}a`),
+    chalk.white(`TaikoProxyServer v${version}a \n by shibe`),
     chalk.grey("\n----------------------------------------------------")
 );
 
@@ -34,4 +31,6 @@ console.log(
     }
 
     await setHosts();
+
+    initServer();
 })();

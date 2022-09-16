@@ -1,7 +1,8 @@
-import fs from "fs";
-import chalk from "chalk";
-import hostile from "hostile";
-import toml from "toml";
+const fs = require("fs");
+const chalk = require("chalk");
+const toml = require("toml");
+const hostile = require("hostile");
+const child_process = require("child_process");
 
 const HOSTS = [
     "tenporouter.loc",
@@ -118,4 +119,4 @@ const setHosts = async () => {
     }
 };
 
-export default setHosts;
+module.exports = setHosts;
