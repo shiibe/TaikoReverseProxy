@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
+const util = require("util");
 const httpProxy = require("http-proxy");
 
 const PORT_NAOMINET = 80;
@@ -13,17 +14,13 @@ const MUCHA_KEY = path.join(__dirname, "../certificates/mucha.key");
 const VSAPI_CERT = path.join(__dirname, "../certificates/vsapi_cert.crt");
 const VSAPI_KEY = path.join(__dirname, "../certificates/vsapi.key");
 
-const localhost = "http://localhost";
-const serverPort = 5000;
+const serverTarget = "http://localhost:5000";
 
 const initServer = () => {
     // ALL.NET
-    httpProxy
+    const naominet = httpProxy
         .createProxyServer({
-            target: {
-                host: localhost,
-                port: serverPort,
-            },
+            target: serverTarget,
         })
         .listen(PORT_NAOMINET, () => {
             console.log(
@@ -33,12 +30,9 @@ const initServer = () => {
         });
 
     // MUCHA
-    httpProxy
+    const mucha = httpProxy
         .createProxyServer({
-            target: {
-                host: localhost,
-                port: serverPort,
-            },
+            target: serverTarget,
             ssl: {
                 key: fs.readFileSync(MUCHA_KEY),
                 cert: fs.readFileSync(MUCHA_CERT),
@@ -52,12 +46,9 @@ const initServer = () => {
         });
 
     // STARTUP
-    httpProxy
+    const vsi = httpProxy
         .createProxyServer({
-            target: {
-                host: localhost,
-                port: serverPort,
-            },
+            target: serverTarget,
             ssl: {
                 key: fs.readFileSync(VSAPI_KEY),
                 cert: fs.readFileSync(VSAPI_CERT),
@@ -71,12 +62,9 @@ const initServer = () => {
         });
 
     // TAIKO
-    httpProxy
+    const taiko = httpProxy
         .createProxyServer({
-            target: {
-                host: localhost,
-                port: serverPort,
-            },
+            target: serverTarget,
             ssl: {
                 key: fs.readFileSync(VSAPI_KEY),
                 cert: fs.readFileSync(VSAPI_CERT),
@@ -85,5 +73,22 @@ const initServer = () => {
         .listen(PORT_HB, () => {
             console.log(chalk.green("[TAIKO]"), `listening on port ${PORT_HB}`);
         });
+
+    naominet.on("proxyRes", function (proxyRes, req, res) {
+        console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+    });
+
+    mucha.on("proxyRes", function (proxyRes, req, res) {
+        console.log(chalk.grey(`[MUCHA] ${req.method} ${req.url}`));
+    });
+
+    vsi.on("proxyRes", function (proxyRes, req, res) {
+        console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+    });
+
+    taiko.on("proxyRes", function (proxyRes, req, res) {
+        console.log(chalk.grey(`[TAIKO] ${req.method} ${req.url}`));
+    });
 };
+
 module.exports = initServer;
