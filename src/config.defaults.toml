@@ -1,5 +1,5 @@
 [proxy]
-# Toggle each proxy on or off
+# Toggle each proxy on or off.
 #
 # defaults:
 # naominet (port 80) = true
