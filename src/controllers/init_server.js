@@ -25,6 +25,10 @@ const initServer = () => {
             .createProxyServer({
                 target: serverTarget,
                 selfHandleResponse: true,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                changeOrigin: true,
             })
             .listen(PORT_NAOMINET, () => {
                 console.log(
@@ -35,15 +39,6 @@ const initServer = () => {
 
         naominet.on("proxyRes", function (proxyRes, req, res) {
             console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
-
-            let body = [];
-            proxyRes.on("data", (chunk) => {
-                body.push(chunk);
-            });
-
-            proxyRes.on("end", () => {
-                res.end(Buffer.concat(body));
-            });
         });
     } else {
         console.log(chalk.grey("[NAOMINET] disabled"));
@@ -58,7 +53,11 @@ const initServer = () => {
                     key: fs.readFileSync(MUCHA_KEY),
                     cert: fs.readFileSync(MUCHA_CERT),
                 },
-                selfHandleResponse: true,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+                changeOrigin: true,
+                secure: true,
             })
             .listen(PORT_MUCHA, () => {
                 console.log(
@@ -68,16 +67,7 @@ const initServer = () => {
             });
 
         mucha.on("proxyRes", function (proxyRes, req, res) {
-            console.log(chalk.grey(`[MUCHA] ${req.method} ${req.url}`));
-
-            let body = [];
-            proxyRes.on("data", (chunk) => {
-                body.push(chunk);
-            });
-
-            proxyRes.on("end", () => {
-                res.end(Buffer.concat(body));
-            });
+            console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
         });
     } else {
         console.log(chalk.grey("[MUCHA] disabled"));
