@@ -15,5 +15,6 @@ npm && npm start
 
 or
 
+cd TaikoReverseProxy
 yarn && yarn start
 ```
