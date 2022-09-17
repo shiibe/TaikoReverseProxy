@@ -1,3 +1,16 @@
+[proxy]
+# Toggle each proxy on or off
+#
+# defaults:
+# naominet (port 80) = true
+# mucha (port 10122) = true
+# vsi (port 54430) = true
+# taiko (port 54431) = true
+naominet = true
+mucha = true
+vsi = true
+taiko = true
+
 [hosts]
 # Automatically sets hosts file entries.
 # NOTE: Admin privileges are required to set hosts automatically.

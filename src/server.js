@@ -11,7 +11,7 @@ const version = packageJson.version;
 
 console.log(
     chalk.grey("----------------------------------------------------\n"),
-    chalk.white(`TaikoProxyServer v${version}a \n by shibe`),
+    chalk.white(`TaikoProxyServer v${version} \n by shibe`),
     chalk.grey("\n----------------------------------------------------")
 );
 
