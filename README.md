@@ -10,11 +10,11 @@ This can be used as a proxy server specifically for [TaikoLocalServer](https://g
 #### Linux
 - Make sure you have Node v16 (and yarn if you prefer it over npm) installed, then run the app like any other node app:
 ```
-cd TaikoReverseProxy
+cd ~path/to/TaikoReverseProxy
 npm && npm start
 
 or
 
-cd TaikoReverseProxy
+cd ~path/to/TaikoReverseProxy
 yarn && yarn start
 ```
