@@ -24,7 +24,6 @@ const initServer = () => {
         const naominet = httpProxy
             .createProxyServer({
                 target: serverTarget,
-                selfHandleResponse: true,
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                 },
@@ -38,7 +37,7 @@ const initServer = () => {
             });
 
         naominet.on("proxyRes", function (proxyRes, req, res) {
-            console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+            console.log(chalk.grey(`[NAOMINET] ${req.method} ${req.url}`));
         });
     } else {
         console.log(chalk.grey("[NAOMINET] disabled"));
@@ -67,7 +66,7 @@ const initServer = () => {
             });
 
         mucha.on("proxyRes", function (proxyRes, req, res) {
-            console.log(chalk.grey(`[VSI] ${req.method} ${req.url}`));
+            console.log(chalk.grey(`[MUCHA] ${req.method} ${req.url}`));
         });
     } else {
         console.log(chalk.grey("[MUCHA] disabled"));
