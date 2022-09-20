@@ -11,7 +11,7 @@ const initServer = require("./controllers/init_server.js");
 
 console.log(
     chalk.grey("----------------------------------------------------\n"),
-    chalk.white(`TaikoReverseProxy v${version} \n by shibe`),
+    chalk.white(`TaikoReverseProxy v${version}`),
     chalk.grey("\n----------------------------------------------------")
 );
 

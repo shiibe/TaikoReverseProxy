@@ -1,4 +1,9 @@
 [proxy]
+# The url of the actual server
+#
+# default: "http://localhost:5000"
+proxy_target_url = "http://localhost:5000"
+
 # Toggle each proxy on or off.
 #
 # defaults:

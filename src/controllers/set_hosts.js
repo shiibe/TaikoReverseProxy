@@ -75,7 +75,6 @@ const setHosts = async () => {
                     chalk.red("[ERROR]"),
                     "No local ip address found. Try setting your IP manually in the config."
                 );
-                process.exit(1);
             } else {
                 ip = addresses[0];
                 console.log(
@@ -91,7 +90,6 @@ const setHosts = async () => {
                     chalk.red("[ERROR]"),
                     "No local IP address found in config."
                 );
-                process.exit(1);
             } else {
                 ip = config.hosts.local_ip;
             }
@@ -114,7 +112,6 @@ const setHosts = async () => {
                 chalk.red("[ERROR]"),
                 "There was an unknown error while trying to set the hosts."
             );
-            process.exit(1);
         }
     }
 };

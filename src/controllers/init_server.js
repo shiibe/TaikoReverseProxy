@@ -14,11 +14,22 @@ const MUCHA_KEY = path.join(__dirname, "../certificates/mucha.key");
 const VSAPI_CERT = path.join(__dirname, "../certificates/vsapi_cert.crt");
 const VSAPI_KEY = path.join(__dirname, "../certificates/vsapi.key");
 
-const serverTarget = "http://localhost:5000";
-
 const config = toml.parse(fs.readFileSync("./config.toml", "utf-8"));
 
+let serverTarget = "http://localhost:5000";
+
 const initServer = () => {
+    if (config.proxy.proxy_target_url) {
+        // if proxy_target_url is set in config.toml, use that instead
+        serverTarget = config.proxy.proxy_target_url;
+    }
+
+    console.log(
+        chalk.grey(
+            `Proxying to ${serverTarget}, please make sure the game server is running on that address.\n`
+        )
+    );
+
     if (config.proxy.naominet === true) {
         // ALL.NET
         const naominet = httpProxy
@@ -127,7 +138,6 @@ const initServer = () => {
         taiko.on("proxyRes", function (proxyRes, req, res) {
             console.log(chalk.grey(`[TAIKO] ${req.method} ${req.url}`));
 
-            // wait for full response and then send it to the client
             let body = [];
             proxyRes.on("data", (chunk) => {
                 body.push(chunk);
