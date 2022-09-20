@@ -20,16 +20,13 @@
   "pkg": {
     "scripts": "src/**/*.js",
     "targets": [
-      "node16-win-x64"
-    ],
-    "assets": [
-      "protobuf/**/*"
+      "node16-win-x64", "node16-linux-x64"
     ]
   },
   "scripts": {
     "start": "node --tls-min-v1.0 src/server.js",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
-    "build": "pkg . --options tls-min-v1.0 -o dist/TaikoReverseProxy.exe && npm run post-build",
+    "build": "pkg . --options tls-min-v1.0 -o dist/TaikoReverseProxy && npm run post-build",
     "post-build": "ncp ./src/config.defaults.toml ./dist/config.toml"
   }
 }
